@@ -1,0 +1,187 @@
+
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Swagger HLF vlm.",
+        "version": "1.0.0",
+        "title": "Swagger HLF VLM ",
+        
+        "contact": {
+            "email": ""
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/vlm",
+    
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/addVehicle": {
+            "post": {
+                
+                "summary": "add Vehicle",
+                "description": "add  Vehicle",
+                "operationId": "addVehicle",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Vehicle object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AV"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/transferVehicle": {
+            "post": {
+                
+                "summary": "transfer vehicle",
+                "description": "transfer vehicle",
+                "operationId": "transferVehicle",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Vehicle ID object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/TV"
+                        }
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/getVehicle": {
+            "post": {
+                
+                "summary": "GET Vehicle ",
+                "description": "Get Vehicle",
+                "operationId": "getVehicle",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Vehicle object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/GV"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/GV"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "AV": {
+            "type": "object",
+            "properties": {
+                "ChasisNumber": {
+                    "type": "string",
+                    "description": "ChasisNumber ID"
+                },
+                "EngineNumber": {
+                    "type": "string",
+                    "description": "EngineNumber ID"
+                },
+                "VehicleModel": {
+                    "type": "string",
+                    "description": "VehicleModel ID"
+                },
+                "VehicleMake": {
+                    "type": "string",
+                    "description": "VehicleMake ID"
+                },
+                "YearOfManufacturing": {
+                    "type": "string",
+                    "description": "YearOfManufacturing date"
+                },
+                "Colour": {
+                    "type": "string",
+                    "description": "Colour"
+                },
+		"SeatingCapacity":{
+		"type":"string",
+		"description":"SeatingCapacity"
+	           },
+	"VehicleInitialValue":{
+	"type":"string",
+	"description":"VehicleInitialValue"
+	}
+        },
+	
+        "TV": {
+            "type": "object",
+            "properties": {
+                "VehicleId": {
+                    "type": "string",
+                    "description": "Vehicle ID"
+                },
+		"Owner":{
+		"type":"string",
+		"description":"Owner ID"
+		}
+            },
+	"GV":{
+	"type":"object",
+	"properties":{
+	"VehicleId":{
+	"type":"string",
+	"description":"vehicle id"
+}
+	}
+	}
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
+}

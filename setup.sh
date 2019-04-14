@@ -38,12 +38,12 @@ echo "Installed vlm chaincode to peer0.manufacturer.vlm.com"
 
 echo "Installing vlm chaincode to peer0.dealer.vlm.com...."
 # Install code on dealer peer
-docker exec -e "CORE_PEER_LOCALMSPID=DealerMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/dealer.vlm.com/users/Admin@dealer.vlm.com/msp" -e "CORE_PEER_ADDRESS=peer0.dealer.vlm.com:7051" cli peer chaincode install -n vlm -v 1.4 -p github.com/vlm/go/ -l golang
+docker exec -e "CORE_PEER_LOCALMSPID=DealerMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/dealer.vlm.com/users/Admin@dealer.vlm.com/msp" -e "CORE_PEER_ADDRESS=peer0.dealer.vlm.com:7051" cli peer chaincode install -n vlm -v 1.0 -p github.com/vlm/go/ -l golang
 echo "Installed vlm chaincode to peer0.dealer.vlm.com"
 
 echo "Installing vlm chaincode to peer0.rta.vlm.com..."
 # Install code on rta peer
-docker exec -e "CORE_PEER_LOCALMSPID=RtaMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/rta.vlm.com/users/Admin@rta.vlm.com/msp" -e "CORE_PEER_ADDRESS=peer0.rta.vlm.com:7051" cli peer chaincode install -n vlm -v 1.4 -p github.com/vlm/go -l golang
+docker exec -e "CORE_PEER_LOCALMSPID=RtaMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/rta.vlm.com/users/Admin@rta.vlm.com/msp" -e "CORE_PEER_ADDRESS=peer0.rta.vlm.com:7051" cli peer chaincode install -n vlm -v 1.0 -p github.com/vlm/go -l golang
 
 sleep 5
 
