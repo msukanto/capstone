@@ -158,11 +158,11 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.getVehicle(APIstub,args)
 	} else if function == "transferVehicle" {
 		return s.transferVehicle(APIstub, args)
-	} 
+	} else if function == "getVehicleHistory" {
+		return s.getVehicleHistory(APIstub, args)
+	}
 	/*
-	else if function == "queryAllVehicles" {
-		return s.queryAllVehicles(APIstub)
-	} else if function == "addInsurace" {
+	else if function == "addInsurace" {
 		return s.addInsurace(APIstub, args)
 	} else if function == "addRTANumber" { 
 		return s.addRTANumber(APIstub, args)
@@ -196,12 +196,11 @@ func (s *SmartContract) addVehicle(APIstub shim.ChaincodeStubInterface, args []s
 
 
 func (s *SmartContract) getVehicle(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-       
+
 	   vehicleId := args[0];
 
         vehicleAsBytes, _ := APIstub.GetState(vehicleId)
-		
-       	/* var vehicle Vehicle
+	/* var vehicle Vehicle
         err := json.Unmarshal(vehicleAsBytes, &vehicle)
         if err != nil {
                 return shim.Error("Issue with vehicle json unmarshaling")
@@ -220,8 +219,8 @@ func (s *SmartContract) transferVehicle(APIstub shim.ChaincodeStubInterface, arg
 	vehicleAsBytes, _ := APIstub.GetState(args[0])
 	vehicle := Vehicle{}
 	json.Unmarshal(vehicleAsBytes, &vehicle)
-	
-	vehicle.Owner = args[1]  
+
+	vehicle.Owner = args[1] 
 
 	vehicleAsBytes, _ = json.Marshal(vehicle)
 	APIstub.PutState(args[0], vehicleAsBytes)
@@ -229,15 +228,13 @@ func (s *SmartContract) transferVehicle(APIstub shim.ChaincodeStubInterface, arg
 	return shim.Success(nil)
 }
 
-func (s *SmartContract) queryAllVehicles(APIstub shim.ChaincodeStubInterface) sc.Response {
+func (s *SmartContract) getVehicleHistory(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	/* change below code logic */
-	startKey := "CAR0"
-	endKey := "CAR999"
+	vehicleId := args[0]
 
-	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	resultsIterator, err := APIstub.GetHistoryForKey(vehicleId)
 	if err != nil {
-		return shim.Error(err.Error())
+		return shim.Error("Error retrieving Vehicle history.")
 	}
 	defer resultsIterator.Close()
 
@@ -255,9 +252,9 @@ func (s *SmartContract) queryAllVehicles(APIstub shim.ChaincodeStubInterface) sc
 		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
 		}
-		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("{\"TxId\":")
 		buffer.WriteString("\"")
-		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString(queryResponse.TxId)
 		buffer.WriteString("\"")
 
 		buffer.WriteString(", \"Record\":")
@@ -268,11 +265,10 @@ func (s *SmartContract) queryAllVehicles(APIstub shim.ChaincodeStubInterface) sc
 	}
 	buffer.WriteString("]")
 
-	fmt.Printf("- queryAllVehicles:\n%s\n", buffer.String())
+	fmt.Printf("getVehicleHistory:\n%s\n", buffer.String())
 
 	return shim.Success(buffer.Bytes())
 }
-
 
 // The main function is only relevant in unit test mode. Only included here for completeness.
 func main() {
